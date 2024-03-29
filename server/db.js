@@ -6,6 +6,6 @@ const pool = new Pool({
     port: 5431,
     database: 'bigtodos'
 })
-module.exports =pool
+module.exports = pool
 
 

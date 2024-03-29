@@ -1,9 +1,11 @@
+import { SetStateAction } from "react"
+
 export interface TODO {
     id: string | number,
     description: string
 }
 export interface IUSER {
-    name: string,
-    email: string,
-    password: string
+    name: string | SetStateAction<string>,
+    email: string | SetStateAction<string>,
+    password: string | SetStateAction<string>
 }
