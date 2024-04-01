@@ -8,17 +8,40 @@ const Slicer = createSlice({
     reducers : {
         addUser(state, action) {
             console.log(action)
+            console.log(state)
             state.user.push({
                 name: action.payload.name,
                 email: action.payload.email,
                 password: action.payload.email
             })
         }
-        
-
     }
 
 })
+const ToDo = createSlice({
+    name: 'todo',
+    initialState: {
+        todo: []
+    },
+    reducers : {
+        addTodo(state, action) {
+            state.todo.push({
+                id: new Date().toISOString,
+                text: action.payload.text,
+                type: action.payload.type,
+                complited: action.payload.complited
+            })
+        },
+        removeTodo(state, action) {
+            state.todo.filter(todo => todo.id !== action.payload.id)
+        },
+        CompleteTodo(state,action){
+            const toggledTodo = state.todo.find(todo => todo.id === action.payload.id) 
+            toggledTodo.complited = !toggledTodo.complited
+        }
+    }
+})
+
 export const {addUser} = Slicer.actions
 export default Slicer.reducer
 
