@@ -1,16 +1,18 @@
 import classes from './Login.module.scss'
-import {useDispatch} from "react-redux"
-import {addUser} from "../../store/TodoSlicer"
-import {useState } from 'react'
+import {useDispatch, useSelector} from "react-redux"
+import {AuthUser} from "../../store/TodoSlicer"
+import {useEffect, useState } from 'react'
 import {IUSER} from "../../Types/types"
 import { useNavigate } from 'react-router-dom'
-const Login = ():JSX.Element => {
+const Login = ()  => {
     const [userAuth, setuserAuth] = useState <IUSER>({name: '' , email: '', password: ''})
 	const navigate = useNavigate()
     const dispatch = useDispatch()
+    const ID = useSelector(state => state.user.user)
+
+
     const HendleClick = () => {
-		dispatch(addUser({...userAuth}))
-		navigate('/user/1')
+		dispatch(AuthUser(userAuth))
 	}
     return (
     <div className={classes.Login}>
@@ -29,7 +31,7 @@ const Login = ():JSX.Element => {
               <input
               onChange={(e) => setuserAuth({...userAuth, password: e.currentTarget.value})}
               id={classes['password']} type="text" />
-              <button onClick={() => HendleClick()}>Sing Up</button>
+              <button style={{cursor: 'pointer'}} onClick={() => HendleClick()}>Sing Up</button>
         </div>
     </div>
   )
