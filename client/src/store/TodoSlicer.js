@@ -1,13 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { useDispatch, useSelector } from "react-redux"
-export const NewUser = useSelector(state => state.user.user)
-    if(NewUser.length){
-    console.log('yes!')
-    let id = NewUser.map(item => item.id).join('')
-    id = +id
-    navigate('/todo')
-}
+import { useLocation, Navigate } from 'react-router-dom';
 export const fetchTodos = createAsyncThunk(
     'todos/fetchTodos',
     async ({rejectWithValue}) => {

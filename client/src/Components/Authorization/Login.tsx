@@ -9,11 +9,16 @@ const Login = ()  => {
     const [userAuth, setuserAuth] = useState <IUSER>({username: '' , email: '', password: ''})
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    
+    const NewUser = useSelector(state => state.user.user)
     const HendleClick = () => {
 		dispatch(AuthUser(userAuth))
 	}
-
+    if(NewUser.length){
+        console.log('yes!')
+        let id = NewUser.map(item => item.id).join('')
+        id = +id
+        navigate(`user/${id}/todo`)
+    }
     return (
     <div className={classes.Login}>
         <div className={classes.container}>
