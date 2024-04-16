@@ -5,7 +5,7 @@ export interface TODO {
     description: string
 }
 export interface IUSER {
-    name: string | SetStateAction<string>,
+    username: string | SetStateAction<string>,
     email: string | SetStateAction<string>,
     password: string | SetStateAction<string>
 }

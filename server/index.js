@@ -8,23 +8,22 @@ const pool = require('./db')
 
 app.use(cors())
 app.use(express.json())
-//app.use('/', (req, res) => {res.json('d')} )
-app.use('/authorization', async(req, res) => {
-    
+app.post('/authorization', async(req, res) => {
+    console.log(req.body)
     try{
-        const {name} = req.body
+        const {username} = req.body
         const {email} = req.body
         const {password} =  req.body
         const User = await pool.query(
             'INSERT INTO users (username, email, password) VALUES($1, $2, $3)  RETURNING *',
-            [name, email, password]
+            [username, email, password]
         )
             res.json(User.rows);
      }
     catch(error){
         console.log(error)
     }
-    console.log("response453ess " + res)
+    
 })
 // {
 // // app.post(':id/todos', async(req, res) => {

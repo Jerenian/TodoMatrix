@@ -1,67 +1,84 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-
-
-export const FetchTodo = createAsyncThunk(
-    'todo/Fetch',
+import { useDispatch, useSelector } from "react-redux"
+export const NewUser = useSelector(state => state.user.user)
+    if(NewUser.length){
+    console.log('yes!')
+    let id = NewUser.map(item => item.id).join('')
+    id = +id
+    navigate('/todo')
+}
+export const fetchTodos = createAsyncThunk(
+    'todos/fetchTodos',
     async ({rejectWithValue}) => {
         try {
-            const response = await fetch('http://localhost:8002/authorization')
+            const response = await fetch('http://localhost:8002')
             if(!response.ok){
-                throw Error('server Error :(')
+                throw Error("Server not Okay :(")
             }
-            const data = await response.json()
-        } catch (error) {
+            const  data = await response.json()
+            return data
             
+        } catch (error) {
+            return rejectWithValue(error.message)
         }
+
     }
 )
 
 export const AuthUser = createAsyncThunk(
-    'todo/AuthUser',
-    async (userAuth) => {
+    'todo/newTodo',
+    async (userAuth, {rejectWithValue, dispatch}) => {
         try {
-
-            const response = await fetch('http://localhost:8002/authorization'
-            , {
+            const NewUser = {
+                username : userAuth.username,
+                email: userAuth.email,
+                password: userAuth.password
+            }
+            const response = await fetch('http://localhost:8002/authorization',{
                 method: "POST",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(userAuth)})
-                const data = await response.json()
-                console.log(data)
-         } catch (error) {
-             console.log(error.message)
-         }
-
+                body: JSON.stringify(NewUser)
+            })
+            if (!response.ok) {
+                throw new Error('Cant\'t add task. Server error.')
+            }
+            const data = await response.json()
+            dispatch(addUser(data[0]))
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
     }
 )
 const Slicer = createSlice({
     name: 'user',
     initialState: {
-        user: [{id:'', name: '', email: '', password: ''}],
+        user: [],
         status: null,
         error: null
     },
     reducers : {
         addUser(state, action) {
+            console.log(state)
+            console.log(action)
             state.user.push({
-                id: new Date().toISOString(),
-                name: action.payload.name,
+                id: action.payload.id,
+                username: action.payload.username,
                 email: action.payload.email,
-                password: action.payload.email
+                password: action.payload.password
             })
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(AuthUser.pending , (state, action) => {
+        builder.addCase(fetchTodos.pending , (state, action) => {
             state.status = "Loading"
         })
-        builder.addCase(AuthUser.fulfilled , (state, action) => {
+        builder.addCase(fetchTodos.fulfilled , (state, action) => {
             state.status = "resolved"
             state.user = action.payload
+            console.log('extra' + state.user)
         })
     }
 
@@ -74,7 +91,6 @@ const ToDo = createSlice({
     reducers : {
         addTodo(state, action) {
             state.todo.push({
-                id: new Date().toISOString(),
                 text: action.payload.text,
                 type: action.payload.type,
                 complited: action.payload.complited
@@ -92,27 +108,3 @@ const ToDo = createSlice({
 
 export const {addUser} = Slicer.actions
 export default Slicer.reducer
-
-// name: 'todos',
-// initialState: {
-//     todos: []
-// },
-//  reducers: {
-//     addTodo(state, action) {
-//         console.log(state)
-//         console.log(action)
-//             state.todos.push({
-//                 id: new Date().toISOString(),
-//                 text: action.payload.text, // В payload всегда то что мы передаем через функции внутри dispatch
-//                 complited: false
-//             })
-//     },
-//     removeTodo(state, action) {
-//         state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
-//     },
-//     toggleTodoComplete(state, action) {
-//         const toggledTodo = state.todos.find(todo => todo.id === action.payload.id) 
-//         toggledTodo.complited = !toggledTodo.complited
-//     }
-//  },
-// })
