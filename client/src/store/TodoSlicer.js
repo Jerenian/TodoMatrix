@@ -29,7 +29,7 @@ export const AuthUser = createAsyncThunk(
                 email: userAuth.email,
                 password: userAuth.password
             }
-            const response = await fetch('http://localhost:8002/authorization',{
+            const response = await fetch('http://localhost:8002/api/user',{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,6 +40,7 @@ export const AuthUser = createAsyncThunk(
                 throw new Error('Cant\'t add task. Server error.')
             }
             const data = await response.json()
+
             dispatch(addUser(data[0]))
         } catch (error) {
             return rejectWithValue(error.message)

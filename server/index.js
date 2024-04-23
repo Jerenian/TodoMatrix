@@ -6,9 +6,11 @@ const cors = require('cors')
 require('dotenv').config()
 const pool = require('./db')
 const router = require('./routers/router')
+const TodoRouter = require('./routers/todoRouter')
 app.use(cors())
 app.use(express.json())
 app.use('/api', router)
+app.use('/api', TodoRouter)
 app.post('/authorization', async(req, res) => {
     console.log(req.body)
     try{
