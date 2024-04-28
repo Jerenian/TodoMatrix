@@ -1,20 +1,27 @@
-const pool = require('../db')
 const {query} = require("express")
+const pool = require('../db')
 class UserController {
     async createUser(req, res){
+        console.log(req.body)
         try{
-            console.log('3333' +  req.body)
             const {username} = req.body
             const {email} = req.body
             const {password} =  req.body
-            const User = await pool.query(
-                'INSERT INTO users (username, email, password) VALUES($1, $2, $3)  RETURNING *',
-                [username, email, password]
-            )
-                res.json(User.rows);
+           // const data = await pool.query('SELECT * FROM users WHERE email = $1 ', [email])
+            //if (data.length  ==  0){
+                const User = await pool.query
+                (
+                    'INSERT INTO users (username, email, password) VALUES($1, $2, $3)  RETURNING *',
+                    [username, email, password]
+                )
+                 res.json(User.rows);
+           // }
+           // else{
+            //    res.json(`Пользователь c таким c Email " ${email} " уже зарегестрирован`)
+           // }
          }
         catch(error){
-            console.log(error.message)
+            res.json(error.message)
         }
     }
 

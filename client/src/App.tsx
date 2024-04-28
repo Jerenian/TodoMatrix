@@ -1,21 +1,22 @@
 import Todo from "./Components/TodoPage/Todo"
 import Layout from "./Components/Layout"
-import Login from "./Components/Authorization/Login"
+import NewLogin from "./Components/Authorization/NewLogin"
 import { Route, Routes, useParams } from "react-router-dom"
-
-
+import Login from "./Components/Authorization/Login"
+import StartPage from "./Components/StartPage"
+import "./App.scss"
 const App = ()  => {
-	const {id} = useParams
 	return(
-	<>
+	<div className="wrapper">
 	    <Routes>
-        <Route index element = {<Login/>}/>
-        
+		<Route index element = {<StartPage/>}></Route>
+        <Route path="/regestration" element = {<NewLogin/>}/>
+        <Route path="/authorization" element = {<Login/>} ></Route>
 		<Route path="/" element ={<Layout/>}>
-			<Route path = 'user/:id/todo' element = {<Todo/>}/>
+			<Route path = 'todo' element = {<Todo/>}/>
 		</Route>
     </Routes>
-	</>
+	</div>
 	)
 }
 

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { useDispatch, useSelector } from "react-redux"
-import { useLocation, Navigate } from 'react-router-dom';
+import {useNavigate} from "react-router-dom"
 export const fetchTodos = createAsyncThunk(
     'todos/fetchTodos',
     async ({rejectWithValue}) => {
@@ -20,8 +19,8 @@ export const fetchTodos = createAsyncThunk(
     }
 )
 
-export const AuthUser = createAsyncThunk(
-    'todo/newTodo',
+export const RegUser = createAsyncThunk(
+    'user/newUser',
     async (userAuth, {rejectWithValue, dispatch}) => {
         try {
             const NewUser = {
@@ -40,10 +39,27 @@ export const AuthUser = createAsyncThunk(
                 throw new Error('Cant\'t add task. Server error.')
             }
             const data = await response.json()
-
-            dispatch(addUser(data[0]))
+            if(data.indexOf("unique_email") !== -1){
+                throw new Error('email already used')
+            }               
+            //useNavigate('/todo')
         } catch (error) {
             return rejectWithValue(error.message)
+        }
+    }
+)
+export const AuthUser = createAsyncThunk(
+    "user/Authuser", 
+    async(userAuth, {rejectWithValue}) => {
+        const NewUser = {
+            email: userAuth.email,
+            password: userAuth.password
+        }
+        try {
+            const response = fetch()
+            
+        } catch (error) {
+            
         }
     }
 )
@@ -73,7 +89,23 @@ const Slicer = createSlice({
         builder.addCase(fetchTodos.fulfilled , (state, action) => {
             state.status = "resolved"
             state.user = action.payload
-            console.log('extra' + state.user)
+            state.error = null
+        })
+        builder.addCase(fetchTodos.rejected, (state, action) => {
+            state.status = "reject"
+            state.error = "Server error"
+        })
+        builder.addCase(RegUser.rejected, (state, action) => {
+            if (action.payload) {
+                state.error = action.payload;
+              } else {
+                state.error = action.error.message;
+              }
+        })
+        builder.addCase(RegUser.fulfilled, (state, action) => {
+            state.status = "resolved"
+            state.user = action.payload
+            state.error = null
         })
     }
 
