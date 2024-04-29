@@ -7,25 +7,29 @@ class UserController {
             const {username} = req.body
             const {email} = req.body
             const {password} =  req.body
-           // const data = await pool.query('SELECT * FROM users WHERE email = $1 ', [email])
-            //if (data.length  ==  0){
                 const User = await pool.query
                 (
                     'INSERT INTO users (username, email, password) VALUES($1, $2, $3)  RETURNING *',
                     [username, email, password]
                 )
                  res.json(User.rows);
-           // }
-           // else{
-            //    res.json(`Пользователь c таким c Email " ${email} " уже зарегестрирован`)
-           // }
          }
         catch(error){
             res.json(error.message)
         }
     }
 
+    async authUser(req, res){
+        try {
+            const {email, password} = req.body
+            const User = await pool.query('SELECT * FROM users WHERE email = $1 AND password = $2 ', [email, password])
+           if(User.rows.length == 0){throw new Error("Неверный логин / пароль")}
+           else{res.json(User.rows)}
 
+        } catch (error) {
+            res.json(error.message)
+        }
+    }
     async getOneUser(req, res){
         try {
             const id = req.params.id

@@ -51,15 +51,22 @@ export const RegUser = createAsyncThunk(
 export const AuthUser = createAsyncThunk(
     "user/Authuser", 
     async(userAuth, {rejectWithValue}) => {
-        const NewUser = {
-            email: userAuth.email,
-            password: userAuth.password
-        }
         try {
-            const response = fetch()
-            
+            const user = {
+                email: userAuth.email,
+                password: userAuth.password
+            }
+            const response = await fetch('http://localhost:8002/api/userAuth', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            })
+            const data = await response.json()
+            console.log(data)
         } catch (error) {
-            
+            console.log(error.message)
         }
     }
 )
@@ -106,6 +113,13 @@ const Slicer = createSlice({
             state.status = "resolved"
             state.user = action.payload
             state.error = null
+        })
+        builder.addCase(AuthUser.rejected, (state, action) => {
+            if (action.payload) {
+                state.error = action.payload;
+              } else {
+                state.error = action.error.message;
+              }
         })
     }
 
