@@ -1,5 +1,6 @@
 const {query} = require("express")
 const pool = require('../db')
+const TodoController = require('../controller/TodoController')
 class UserController {
     async createUser(req, res){
         console.log(req.body)
@@ -21,12 +22,12 @@ class UserController {
 
     async authUser(req, res){
         try {
-            const {email, password} = req.body
+            const {email, password} = await req.body
             const User = await pool.query('SELECT * FROM users WHERE email = $1 AND password = $2 ', [email, password])
-           if(User.rows.length == 0){throw new Error("Неверный логин / пароль")}
-           else{res.json(User.rows)}
-
-        } catch (error) {
+            res.json(User.rows[0])
+        }
+        catch (error) {
+            console.log(error)
             res.json(error.message)
         }
     }

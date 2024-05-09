@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 type Props = {}
 
 const Todo = (props: Props) => {
-  return (
-    <div>Todo</div>
-  )
+    const data = useSelector(state => state.ToDo)
+    return 
 }
 
 export default Todo

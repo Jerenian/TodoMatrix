@@ -1,6 +1,6 @@
 import classes from './Login.module.scss'
 import {useDispatch, useSelector} from "react-redux"
-import {RegUser} from "../../store/TodoSlicer"
+import {RegUser} from "../../store/UserSlicer"
 import {useEffect, useState } from 'react'
 import {INEWUSER} from "../../Types/types"
 import { useNavigate } from 'react-router-dom'
@@ -11,14 +11,16 @@ const NewLogin = ()  => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const NewUser = useSelector(state => state.user.user)
+
     const HendleClick = () => {
 		dispatch(RegUser(userAuth))
+		console.log(status)
 		
 	}
 	useEffect(() =>{
 		if(status === "resolved") {navigate('/todo')}
 	},[status])
-	
+	console.log(status)
     return (
     <div className={classes.Login}>
         <div className={classes.container}>

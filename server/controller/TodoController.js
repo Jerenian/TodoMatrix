@@ -1,5 +1,7 @@
+const { query } = require('express')
 const pool = require('../db')
 class TodoController {
+
     async addTodo(req, res){
         try{
         const {text, type, user_id} = req.body
@@ -15,11 +17,12 @@ class TodoController {
     }
     }
     async getAllTodos(req, res){
-        const id = req.query.id
+        const {id} = req.params
+        console.log(id)
         const Todos = await pool.query(
-            'SELECT * FROM todos where user_id = $1', [id]
+            'SELECT * FROM todos WHERE user_id = $1', [id]
         )
-        res.json(Todos.rows)
+       res.json(Todos.rows[0])
     }
     async getTypeTodos(req, res){}
     async deleteTodo(req, res){}

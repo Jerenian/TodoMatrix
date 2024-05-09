@@ -1,7 +1,9 @@
 import {configureStore} from '@reduxjs/toolkit'
-import userReducer from "./TodoSlicer"
+import userReducer from "./UserSlicer"
+import ToDoReducer from './TodoSlicer'
 export default configureStore({
     reducer: {
-        user: userReducer
+        user: userReducer,
+        ToDo: ToDoReducer
     }
 })
