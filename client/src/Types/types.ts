@@ -1,13 +1,15 @@
-import { SetStateAction } from "react"
 
-export interface TODO {
-    id: string | number,
-    description: string
+
+export interface ITODO {
+    id:  number | null,
+    text: string ,
+    complited: boolean,
+    type: string
 }
 export interface INEWUSER {
-    username: string | SetStateAction<string>,
-    email: string | SetStateAction<string>,
-    password: string | SetStateAction<string>
+    username: string ,
+    email: string ,
+    password: string 
 }
 export interface IUSER{
     email: string,

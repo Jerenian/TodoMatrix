@@ -9,6 +9,12 @@ export const fetchToDo = createAsyncThunk(
         dispatch(addTodo(data))
     }
 )
+// export const AddNewTodo = createAsyncThunk(
+//     "todo/AddNewTodo"
+//     async() => {
+
+//     }
+// )
 const ToDo = createSlice({
     name: 'todo',
     initialState: {
@@ -16,9 +22,8 @@ const ToDo = createSlice({
     },
     reducers : {
         addTodo(state, action) {
-            console.log(action.payload)
             state.todo.push({
-                user_id: action.payload.user_id,
+                user_id: action.payload.id,
                 text: action.payload.text,
                 type: action.payload.type,
                 complited: action.payload.complited

@@ -1,7 +1,7 @@
 import React from 'react'
-const UrgentlyImportant = () => {
+const UrgentlyImportant = (item) => {
   return (
-    <div>UrgentlyImportant</div>
+    <div>{item.text}</div>
   )
 }
 

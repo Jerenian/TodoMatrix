@@ -1,4 +1,4 @@
-import Todo from "./Components/TodoPage/Todo"
+import TodoList from "./Components/TodoPage/Todo"
 import Layout from "./Components/Layout"
 import NewLogin from "./Components/Authorization/NewLogin"
 import { Route, Routes, useParams } from "react-router-dom"
@@ -13,7 +13,7 @@ const App = ()  => {
         <Route path="/regestration" element = {<NewLogin/>}/>
         <Route path="/authorization" element = {<Login/>} ></Route>
 		<Route path="/" element ={<Layout/>}>
-			<Route path = 'todo' element = {<Todo/>}/>
+			<Route path = 'todo' element = {<TodoList/>}/>
 		</Route>
     </Routes>
 	</div>

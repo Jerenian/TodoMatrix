@@ -1,5 +1,7 @@
 .wrapper{
-    background-color: rgba(97, 97, 252, 0.768);
+    background: linear-gradient( #858ef3, #b15656) no-repeat;
+    border-bottom: 3px dashed #000;
+    overflow: hidden;
 }
 .row{
     display: flex;

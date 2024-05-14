@@ -7,6 +7,13 @@ body{
     background: linear-gradient(#b15656, #858ef3) no-repeat;
     
 }
+input, textarea{
+    outline: 0;
+    background: transparent;
+    border: 0;
+}
+
+
 .wrapper{
     font-family: "Comfortaa", sans-serif;
     width: 100%;
@@ -33,4 +40,5 @@ body{
     color: #00000033;
     letter-spacing: 5px;
 }
+
     
