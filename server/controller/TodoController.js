@@ -10,17 +10,16 @@ class TodoController {
             'INSERT INTO todos (user_id, text, type) VALUES($1, $2, $3)  RETURNING *',
             [user_id, text, type]
         )
-        res.json(newTodo.rows)
+        res.json(newTodo.rows[0])
     }
     catch(error){
         console.log(error.message)
     }
     }
     async getAllTodos(req, res){
-        const {id} = req.params
-        console.log(id)
+        const {user_id} = req.params
         const Todos = await pool.query(
-            'SELECT * FROM todos WHERE user_id = $1', [id]
+            'SELECT * FROM todos WHERE user_id = $1', [user_id]
         )
        res.json(Todos.rows[0])
     }

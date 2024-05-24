@@ -20,7 +20,6 @@ const NewLogin = ()  => {
 	useEffect(() =>{
 		if(status === "resolved") {navigate('/todo')}
 	},[status])
-	console.log(status)
     return (
     <div className={classes.Login}>
         <div className={classes.container}>

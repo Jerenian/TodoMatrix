@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { ITODO } from '../Types/types'
 import { useDispatch } from 'react-redux'
 import classes from "./UI.module.scss"
-const InputField = () => {
+import {AddNewTodo} from "../store/TodoSlicer"
+const InputField = (data: any) => {
     const [Todo, setTodo] = React.useState<ITODO>({
-        text: '', type: 'Choose type', complited: false, id: null
+        text: '', type: 'Choose type', complited: false, id: null,
     })
     const [chooseType, setchooseType] = React.useState<any>({
         IsAcitve: false,
@@ -15,7 +16,9 @@ const InputField = () => {
     })
     const dispatch = useDispatch()
     const Hendleclick = () => {
-        dispatch()
+        const user_id = data.data.user_id
+        console.log(data.data)
+        dispatch(AddNewTodo(user_id, Todo))
     }
   return (
     <div className={classes.Input__container} >

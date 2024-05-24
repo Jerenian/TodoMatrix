@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 import { fetchToDo } from "./TodoSlicer"
-
+import {jwtDecode} from "jwt-decode"
 export const RegUser = createAsyncThunk(
     'user/newUser',
     async (userAuth, {rejectWithValue, dispatch}) => {
@@ -23,10 +23,12 @@ export const RegUser = createAsyncThunk(
                 throw new Error('Cant\'t add task. Server error.')
             }
             const data = await response.json()
+            console.log(data)
             fetchToDo(data[0].id)
             if(data.indexOf("unique_email") !== -1){
                 throw new Error('email already used')
-            }         
+            }
+            return jwtDecode(data)
 
         } catch (error) {
             
@@ -54,7 +56,8 @@ export const AuthUser = createAsyncThunk(
                 throw new Error('Cant\'t add task. Server error.')
             }
             const data = await response.json()
-            await dispatch(fetchToDo(data.id))
+            localStorage.setItem('token', data)
+            return jwtDecode(data)
         }
             catch (error) {
             console.log(error.message)

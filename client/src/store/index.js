@@ -4,6 +4,8 @@ import ToDoReducer from './TodoSlicer'
 export default configureStore({
     reducer: {
         user: userReducer,
-        ToDo: ToDoReducer
-    }
+        ToDo: ToDoReducer,
+        [API.reducerPath]: API.reducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(API.middleware)
 })
