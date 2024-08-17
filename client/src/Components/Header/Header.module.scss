@@ -2,6 +2,8 @@
     background: linear-gradient( #858ef3, #b15656) no-repeat;
     border-bottom: 3px dashed #000;
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
 }
 .row{
     display: flex;

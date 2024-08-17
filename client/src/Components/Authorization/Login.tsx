@@ -1,26 +1,23 @@
 import classes from './Login.module.scss'
 import {useDispatch, useSelector} from "react-redux"
-import {AuthUser} from "../../store/UserSlicer"
 import {useEffect, useState } from 'react'
 import {IUSER} from "../../Types/types"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom' 
+import { jwtDecode } from 'jwt-decode'
+
 const Login = ()  => {
     const [userAuth, setuserAuth] = useState <IUSER>({email: '', password: ''})
-    const {error, status} = useSelector(state => state.user)
+    const [setAuthUser, {error}] = useAuthUserMutation()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        console.log(status)
-        if(status !== 'resolved'){
-             setuserAuth({email: '', password: ''})
-        }
-        else{
-            navigate('/todo')
-        }
-    }, [status])
-    const HendleClick = () => {
-		dispatch(AuthUser(userAuth))
+    
+    const HendleClick = async () => {
+        console.log(userAuth)
+        const user = await setAuthUser({...userAuth, email: userAuth.email, password: userAuth.password}).unwrap()
+        localStorage.setItem('token', user)
+        dispatch(setCrenditalis(user))
+        error ? '' : navigate('/user')
     }
     
 

@@ -13,8 +13,7 @@ const generateJwt = (id, email) =>{
 
 class UserController {
     async createUser(req, res){
-        console.log(req)
-        console.log(req.body)
+
         try{
             const {username} = req.body
             const {email} = req.body
@@ -26,6 +25,7 @@ class UserController {
                     [username, email, hashpassword]
                 )
             const token =  generateJwt(User.rows[0].id, email)
+            console.log(token)
             res.json(token);
          }
         catch(error){
@@ -35,14 +35,17 @@ class UserController {
 
     async authUser(req, res, next){
         try {
-            const {email, password} = await req.body
+            const {email, password} = req.body
+            console.log(password)
             const User = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+            console.log(User)
             const comparepassword = bcrypt.compareSync(password, User.rows[0].password)
             console.log(User.rows[0].password)
             if(!comparepassword) {
-               return new TypeError('xyi')
+               return new TypeError('неврный пароль')
             }
             const token = generateJwt(User.rows[0].id, email)
+            console.log(token)
             res.json(token)
         }
         catch (error) {

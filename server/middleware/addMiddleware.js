@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-module.exports = (req, res, next) => {
+const auth = (req, res, next) => {
     if (req.method === "OPTIONS") {
         next()
     }
@@ -16,3 +16,4 @@ module.exports = (req, res, next) => {
         res.status(401).json({message: 'Не авторизован'})
     }
 }
+module.exports = auth

@@ -5,12 +5,11 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 const pool = require('./db')
-const router = require('./routers/router')
 const TodoRouter = require('./routers/todoRouter')
+const router = require('./routers/index')
 app.use(cors())
 app.use(express.json())
 app.use('/api', router)
-app.use('/api', TodoRouter)
 
 
 app.listen(8002, () => {

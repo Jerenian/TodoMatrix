@@ -1,0 +1,80 @@
+.TodoList{
+    display: flex;
+    justify-content: center;
+}
+.LinkItem{
+    display: grid;
+    grid: repeat(2, 200px) / auto-flow 150px;
+    gap: 20px;
+    &[data-selector =  false] {
+        display: flex;
+        justify-content: center;
+        padding-top: 5%;
+        height: 100px;
+    }
+    a{
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .ui{
+        background: linear-gradient(#f80303, #bd0c0cae) no-repeat;
+        color: #fff;
+        text-decoration: none;
+    }
+    .nui{
+        background: linear-gradient(#1404f0, #4a58f1) no-repeat;
+           color: #fff;
+           text-decoration: none;
+    }
+    .uni{
+        background: linear-gradient(#f8e803, #a19c22bd) no-repeat;
+        color: #241818;
+        text-decoration: none;
+    }
+    .nuni{
+        background: linear-gradient(#605e5e, #bdbbbb) no-repeat;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+.TodoRow{
+    display: flex;
+    justify-content: space-between;
+    align-items:flex-start ;
+    font-size: 1.2em;
+    margin-top: 15px;
+    button{
+        background: #373737;
+        padding:  5px;
+        font-weight: normal;
+    }
+    p{
+        width: 85%;
+        overflow-wrap:break-word;
+    }
+    input{
+        margin-bottom: 10px;
+    }
+    .complited {
+        text-decoration: line-through;
+        order: 0;
+    }
+    .NoComplited{
+        text-decoration: none;
+        order: unset;
+    }
+}
+.title{
+    font-size: 2em;
+    padding: 0 0 10px 20px;
+    color: #f8f800;
+    font-weight: 700;
+}
+.TodoItem{
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 15px 20px;
+}
+.TodoContainer{
+    padding: 0 26.2% 0 20%;
+}
